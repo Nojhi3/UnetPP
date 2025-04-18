@@ -9,7 +9,7 @@ def conv_block(x, filters, dropout_rate=0.0):
     x = BatchNormalization()(x)
     return x
 
-def UNetPP(input_shape=(512, 512, 1), last_activation='sigmoid'):
+def UNetPP(input_shape=(128, 128, 1), last_activation='sigmoid'):
     inputs = Input(input_shape)
 
     # Encoder

@@ -20,7 +20,7 @@ def convert_one_channel(img):
         return img
     else:
         return img
-def pre_masks(resize_shape=(512,512),path=default_path):
+def pre_masks(resize_shape=(128,128),path=default_path):
     ZipFile(path+"/Orig_Masks.zip").extractall(path+'/Masks/') 
     path=path+'/Masks/'
     dirs=natsorted(os.listdir(path))
@@ -50,7 +50,7 @@ def pre_splitted_masks(path=default_path):
         img=Image.open(path+dirs[i])
         img=convert_one_channel(np.asarray(img))
         masks=np.concatenate((masks,img))
-    masks=np.reshape(masks,(len(dirs),512,512,1))
+    masks=np.reshape(masks,(len(dirs),128,128,1))
     return masks
     
 
