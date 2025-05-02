@@ -1,6 +1,8 @@
     from tensorflow.keras.layers import Input, Conv2D, MaxPooling2D, UpSampling2D, concatenate, Dropout, BatchNormalization
     from tensorflow.keras.models import Model
-    
+    from tensorflow.keras import mixed_precision
+    mixed_precision.set_global_policy('mixed_float16')
+
     # Only because git push is not working
 
     def conv_block(x, filters, dropout_rate=0.0):
@@ -56,7 +58,7 @@
         x05 = conv_block(concatenate([x00, x01, x02, x03, x04, upsample_concat(x14, x00, 32)]), 32, 0.1)
 
         # Output
-        output = Conv2D(1, 1, activation=last_activation)(x05)
+        output = Conv2D(1, 1, activation=last_activation, dtype = 'float32')(x05)
 
         model = Model(inputs, output)
         return model
