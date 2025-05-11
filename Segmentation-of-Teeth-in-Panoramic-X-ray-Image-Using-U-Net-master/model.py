@@ -33,8 +33,6 @@ def UNetPP(input_shape=(512,512, 1), last_activation='sigmoid'):
     x30 = conv_block(x30, 256, 0.4)
     x40 = MaxPooling2D()(x30)
     x40 = conv_block(x40, 512, 0.5)
-    x50 = MaxPooling2D()(x40)
-    x50 = conv_block(x50, 1024, 0.5)
 
 
     # Decoder (Nested Connections)
@@ -51,14 +49,8 @@ def UNetPP(input_shape=(512,512, 1), last_activation='sigmoid'):
     x13 = conv_block(concatenate([x10, x11, x12, upsample_concat(x22, x10, 64)]), 64, 0.2)
     x04 = conv_block(concatenate([x00, x01, x02, x03, upsample_concat(x13, x00, 32)]), 32, 0.1)
 
-    x41 = conv_block(upsample_concat(x50, x40, 512), 512, 0.5)
-    x32 = conv_block(concatenate([x30, x31, upsample_concat(x41, x30, 256)]), 256, 0.4)
-    x23 = conv_block(concatenate([x20, x21, x22, upsample_concat(x32, x20, 128)]), 128, 0.3)
-    x14 = conv_block(concatenate([x10, x11, x12, x13, upsample_concat(x23, x10, 64)]), 64, 0.2)
-    x05 = conv_block(concatenate([x00, x01, x02, x03, x04, upsample_concat(x14, x00, 32)]), 32, 0.1)
-
     # Output
-    output = Conv2D(1, 1, activation=last_activation, dtype = 'float32')(x05)
+    output = Conv2D(1, 1, activation=last_activation, dtype = 'float32')(x04)
 
     model = Model(inputs, output)
     return model

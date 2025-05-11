@@ -1,8 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-
-@author: serdarhelli
-"""
 from PIL import Image
 import os
 import sys
